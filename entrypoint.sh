@@ -8,8 +8,22 @@ if [[ ! -z ${GITHUB_WORKSPACE} ]]; then
     chown -R archuser ${GITHUB_WORKSPACE}
 fi
 
-sudo -u archuser bash -c "${script}"
+cat << EOF > /tmp/script
+#! /usr/bin/env bash
 
+set -e
+
+${script}
+
+EOF
+
+chmod 755 /tmp/script
+
+sudo -E -u archuser /tmp/script
+
+# cleanup
 if [[ ! -z ${GITHUB_WORKSPACE} ]]; then
     chown -R root ${GITHUB_WORKSPACE}
 fi
+
+rm /tmp/script
