@@ -4,8 +4,12 @@ set -e
 
 script=$1
 
-chown -R archuser ${GITHUB_WORKSPACE}
+if [[ ! -z ${GITHUB_WORKSPACE} ]]; then
+    chown -R archuser ${GITHUB_WORKSPACE}
+fi
 
 sudo -u archuser bash -c "${script}"
 
-chown -R root ${GITHUB_WORKSPACE}
+if [[ ! -z ${GITHUB_WORKSPACE} ]]; then
+    chown -R root ${GITHUB_WORKSPACE}
+fi
