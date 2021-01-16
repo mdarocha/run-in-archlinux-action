@@ -1,6 +1,6 @@
 FROM archlinux
 
-RUN pacman -Syu --noconfirm git sudo
+RUN pacman -Syu --noconfirm git sudo base-devel
 
 RUN useradd archuser
 
