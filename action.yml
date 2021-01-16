@@ -1,0 +1,12 @@
+name: 'Run as Arch Linux'
+description: 'Run a script in an Arch Linux container. Intended for building packages'
+inputs:
+  commands:
+    description: 'commands to run'
+    required: true
+    default: 'echo "Hello from Arch Linux!"'
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  args:
+    - ${{ inputs.commands }}
