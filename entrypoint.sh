@@ -9,31 +9,30 @@ if [[ -z ${script} ]]; then
     exit 1;
 fi
 
+function make_chown () {
+    if [[ ! -z ${GITHUB_WORKSPACE} ]]; then
+        chown -R ${1} ${GITHUB_WORKSPACE}
+    fi
+    if [[ ! -z ${GITHUB_HOME} ]]; then
+        chown -R ${1} ${GITHUB_HOME}
+    fi
+    if [[ ! -z ${HOME} ]]; then
+        chown -R ${1} ${HOME}
+    fi
+}
+
 function clean_up () {
     echo "Cleaning up..."
 
     user=${USER:=root}
-
-    if [[ ! -z ${GITHUB_WORKSPACE} ]]; then
-        chown -R ${user} ${GITHUB_WORKSPACE}
-    fi
-
-    if [[ ! -z ${GITHUB_HOME} ]]; then
-        chown -R ${user} ${GITHUB_HOME}
-    fi
+    make_chown ${user}
 
     rm /tmp/script
 }
 trap clean_up EXIT
 
 # make archuser the owner of these directories
-if [[ ! -z ${GITHUB_WORKSPACE} ]]; then
-    chown -R archuser ${GITHUB_WORKSPACE}
-fi
-
-if [[ ! -z ${GITHUB_HOME} ]]; then
-    chown -R archuser ${GITHUB_HOME}
-fi
+make_chown archuser
 
 # output script to /tmp/script
 cat << EOF > /tmp/script
