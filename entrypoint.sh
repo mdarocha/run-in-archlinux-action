@@ -3,7 +3,6 @@
 set -e
 
 script=$1
-gpg_key=$2
 
 if [[ -z ${script} ]]; then
     echo "You have to specify the commands to run in docker"
@@ -31,13 +30,6 @@ function clean_up () {
     rm /tmp/script
 }
 trap clean_up EXIT
-
-# setup gpg if passed a private key
-if [[ ! -z ${gpg_key} ]]; then
-    echo "${gpg_key}" > /tmp/signkey.gpg
-    gpg --import /tmp/signkey.gpg
-    rm /tmp/signkey.gpg
-fi
 
 # make archuser the owner of these directories
 make_chown archuser

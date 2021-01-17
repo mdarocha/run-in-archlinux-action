@@ -5,12 +5,8 @@ inputs:
     description: 'commands to run'
     required: true
     default: 'echo "Hello from Arch Linux!"'
-  gpg-key:
-    description: 'gpg private key to setup in keyring'
-    required: false
 runs:
   using: 'docker'
   image: 'Dockerfile'
   args:
     - ${{ inputs.commands }}
-    - ${{ inputs.gpg-key }}
