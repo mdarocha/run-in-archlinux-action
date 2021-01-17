@@ -12,12 +12,14 @@ fi
 function clean_up () {
     echo "Cleaning up..."
 
+    user=${USER:=root}
+
     if [[ ! -z ${GITHUB_WORKSPACE} ]]; then
-        chown -R ${USER} ${GITHUB_WORKSPACE}
+        chown -R ${user} ${GITHUB_WORKSPACE}
     fi
 
     if [[ ! -z ${GITHUB_HOME} ]]; then
-        chown -R ${USER} ${GITHUB_HOME}
+        chown -R ${user} ${GITHUB_HOME}
     fi
 
     rm /tmp/script
